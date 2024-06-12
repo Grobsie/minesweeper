@@ -14,13 +14,13 @@ function InfoPanel() {
   return (
     <>
       <div class="infopanel">
-        Here is some text
+        Here you can play minesweeper, my first try at a React app. find the source code @ github.com/grobsie/minesweeper
       </div>
     </>
   );
 }
 
-function MainPanel() {
+function TilePanel() {
   const array = [
                 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0,
@@ -28,30 +28,23 @@ function MainPanel() {
                 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0,
                 ]
+  const cellsToReturn = [];
+  for (let i in array) {
+    console.log(i + " is equal to 0: " + (i==0))
+    cellsToReturn.push(Tile(i));
+    if (i % 5 === 0 && i > 1) {
+      cellsToReturn.push("<br></br");
+    }
+  };
   return (
     <>
-      <div class="mainpanel">
-        <h1>hello</h1>
-      </div>
+    <div class="tilePanel">
+      {cellsToReturn}
+    </div>
     </>
   );  
 }
 
-function Test() {
-  const array = [
-                0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0,
-                ]
-  for 
-  return (
-    <>
-      
-    </>
-  );  
-}
 function Tile(value) {
   return (
     <>
@@ -64,8 +57,7 @@ export default function Game() {
     <>
       <NavigationPanel />
       <InfoPanel />
-      <MainPanel />
-      <Test />
+      <TilePanel />
 
     
     </>
