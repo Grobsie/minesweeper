@@ -5,23 +5,48 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f1f1f1;
 }
 
-h1 {
-  text-align: left;
+h5 {
+  font-weight: 800;
+  margin: 10px 10px;
+  font-size: 18px;
 }
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
+.titlepanel {
+  font-style: bold;
+  margin: 5px;
+  border-bottom: 2px solid #f44336;
+}
 .navigationpanel {
   text-align: center;
 }
 
-.infopanel {
+button {
+  color: #000000 !important;
+  background-color: #000000 !;
+  border: none;
+  display: inline-block;
+  padding: 8px 16px;
+  vertical-align: middle;
+  overflow: hidden;
+  text-decoration: none;
   text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.infopanel {
+  text-align: left;
+  background-color: white;
+  margin: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
 }
 
 .timerpanel {
@@ -30,6 +55,7 @@ code {
 
 .tilepanel {
   text-align: center;
+  margin: 10px;
 }
 
 .tile {
@@ -39,10 +65,25 @@ code {
   vertical-align: middle;
   line-height: 40px;       /* The same as your div height */
 
-  border: 1px solid black;
+  border: 1px solid #2196F3;
   display: inline-block;
+  background-color: white;
 }
 
 .leaderbordpanel {
+  text-align: center;
+  color: #fff;
+  background-color: #616161;
+  margin: 5px;
+}
+
+table {
+  border: 1px solid red;
+  width: 100%;
+  text-align: center;
+}
+
+td, tr {
+  border: 1px solid red;
   text-align: center;
 }

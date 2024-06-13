@@ -16,7 +16,7 @@ function TitlePanel() {
   return (
     <>
       <div class="titlepanel">
-        <h1>minesweeper</h1>
+        <h5>minesweeper</h5>
       </div>
     </>
   );
@@ -26,7 +26,7 @@ function InfoPanel() {
   return (
     <>
       <div class="infopanel">
-        Here you can play minesweeper, my first try at a React app. find the source code @ github.com/grobsie/minesweeper
+        Here you can play minesweeper, my first try at a React app. find the source code <a href="https://github.com/Grobsie/minesweeper">@github</a>
       </div>
     </>
   );
@@ -84,8 +84,16 @@ function Tile(value) {
   const [val, setValue] = useState(null);
   
   function handleLeftClick() {
-    if (val === null) {
-      setValue(value);
+    switch(val) {
+      case null:
+        setValue(value);
+        break;
+      case "flag":
+        break;
+      case "B":
+        break;
+      default:
+        setValue(value);
     }
   }
 
@@ -110,10 +118,8 @@ function LeaderboardPane() {
   return (
     <>
       <div class="leaderbordpanel">
+      Leaderbord
         <table>
-          <tr>
-            <th>Leaderbord</th>
-          </tr>
           <td>
             <th>Easy</th>
               <tr>
@@ -193,8 +199,8 @@ export default function Game() {
   return (
     <>
       <TitlePanel />
-      <NavigationPanel />
       <InfoPanel />
+      <NavigationPanel />
       <TimerPanel />
       <TilePanel />
       <LeaderboardPane />
