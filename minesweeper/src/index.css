@@ -7,13 +7,42 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+h1 {
+  text-align: left;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
+.navigationpanel {
+  text-align: center;
+}
 
+.infopanel {
+  text-align: center;
+}
+
+.timerpanel {
+  text-align: center;
+}
+
+.tilepanel {
+  text-align: center;
+}
 
 .tile {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 40px;       /* The same as your div height */
+
   border: 1px solid black;
+  display: inline-block;
+}
+
+.leaderbordpanel {
+  text-align: center;
 }
