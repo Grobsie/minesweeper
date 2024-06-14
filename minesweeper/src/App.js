@@ -1,12 +1,32 @@
 import { useState } from 'react';
 
+let grid = [
+  ["B" , 1  ,  0  , 1  , 1  ],
+  [ 1  , 1  ,  0  , 1  , "B"],
+  [ 0  , 0  ,  0  , 1  , 1  ],
+  [ 1  , 1  ,  2  , 2  , 2  ],
+  [ 1  ,"B" ,  2  ,"B" ,"B" ],
+   ];
+
+function GenerateGrid(gridsize, bombs) {
+  grid = [];
+  for (let rowIndex = 0; rowIndex < gridsize; rowIndex++) {
+    grid.push([]);
+    
+    for (let columnIndex = 0; columnIndex < gridsize; columnIndex++) {
+      grid[rowIndex].push(12);
+    } 
+  }
+  console.log(grid);
+}
+
 function NavigationPanel() {
   return (
     <>
-      <div class="navigationpanel">
-        <button className="square">easy</button>
-        <button className="square">normal</button>
-        <button className="square">hard</button>
+      <div className="navigationpanel">
+        <button className="square" onClick={() => GenerateGrid(3, 5)}>easy</button>
+        <button className="square" onClick={() => GenerateGrid(9, 5)}>normal</button>
+        <button className="square" onClick={() => GenerateGrid(15, 5)}>hard</button>
       </div>
     </>
   )
@@ -15,7 +35,7 @@ function NavigationPanel() {
 function TitlePanel() {
   return (
     <>
-      <div class="titlepanel">
+      <div className="titlepanel">
         <h5>minesweeper</h5>
       </div>
     </>
@@ -25,7 +45,7 @@ function TitlePanel() {
 function InfoPanel() {
   return (
     <>
-      <div class="infopanel">
+      <div className="infopanel">
         Here you can play minesweeper, my first try at a React app. find the source code <a href="https://github.com/Grobsie/minesweeper">@github</a>
       </div>
     </>
@@ -35,7 +55,7 @@ function InfoPanel() {
 function TimerPanel() {
   return (
     <>
-      <div class="timerpanel">
+      <div className="timerpanel">
         12m55s
       </div>
     </>
@@ -43,29 +63,19 @@ function TimerPanel() {
 }
 
 function TilePanel() {
-  const array = [
-               "B" , 1  ,  0  , 1  , 1  ,
-                1  , 1  ,  0  , 1  ,"B" ,
-                0  , 0  ,  0  , 1  , 1  ,
-                1  , 1  ,  2  , 2  , 2  ,
-                1  ,"B" ,  2  ,"B" ,"B" ,
-                ]
   const returnArray = [];
   let tempCellsInRow = [];
-  let counter = 0;
-  let rowLength = Math.sqrt(array.length);
-  for (let rows = 0; rows < rowLength; rows++) {
-    for (let columns = 0; columns < rowLength; columns++) {
-      tempCellsInRow.push(Tile(array[counter]));
-      counter++;
+  for (let rowIndex in grid) {
+    for (let tileIndex in grid[rowIndex]) {
+      tempCellsInRow.push(Tile(grid[rowIndex][tileIndex]));
     }
     returnArray.push(Row(tempCellsInRow));
     tempCellsInRow = [];
   };
-
+  //console.log(returnArray);
   return (
     <>
-    <div class="tilepanel">
+    <div className="tilepanel">
       {returnArray}
     </div>
     </>
@@ -75,7 +85,7 @@ function TilePanel() {
 function Row(cellsInRow) {
   return (
     <>
-      <div class="row">{cellsInRow}</div>
+      <div className="row">{cellsInRow}</div>
     </>
   );
 }
@@ -109,7 +119,7 @@ function Tile(value) {
 
   return (
     <>
-      <div class="tile" onClick={handleLeftClick} onContextMenu={handleRightClick}>{val}</div>
+      <div className="tile" onClick={handleLeftClick} onContextMenu={handleRightClick}>{val}</div>
     </>
   );
 }
@@ -117,78 +127,10 @@ function Tile(value) {
 function LeaderboardPane() {
   return (
     <>
-      <div class="leaderbordpanel">
+      <div className="leaderbordpanel">
       Leaderbord
         <table>
-          <td>
-            <th>Easy</th>
-              <tr>
-                <td>winner1</td>
-                <td>31s</td>
-              </tr>
-              <tr>
-                <td>winner1</td>
-                <td>31s</td>
-              </tr>
-              <tr>
-                <td>winner1</td>
-                <td>31s</td>
-              </tr>
-              <tr>
-                <td>winner1</td>
-                <td>31s</td>
-              </tr>
-              <tr>
-                <td>winner1</td>
-                <td>31s</td>
-              </tr>
-          </td>
-          <td>
-          <th>Medium</th>
-              <tr>
-                <td>winner1</td>
-                <td>31s</td>
-              </tr>
-              <tr>
-                <td>winner1</td>
-                <td>31s</td>
-              </tr>
-              <tr>
-                <td>winner1</td>
-                <td>31s</td>
-              </tr>
-              <tr>
-                <td>winner1</td>
-                <td>31s</td>
-              </tr>
-              <tr>
-                <td>winner1</td>
-                <td>31s</td>
-              </tr>
-          </td>
-          <td>
-          <th>Hard</th>
-              <tr>
-                <td>winner1</td>
-                <td>31s</td>
-              </tr>
-              <tr>
-                <td>winner1</td>
-                <td>31s</td>
-              </tr>
-              <tr>
-                <td>winner1</td>
-                <td>31s</td>
-              </tr>
-              <tr>
-                <td>winner1</td>
-                <td>31s</td>
-              </tr>
-              <tr>
-                <td>winner1</td>
-                <td>31s</td>
-              </tr>
-          </td>
+          
         </table> 
       </div>
     </>
