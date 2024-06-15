@@ -1,44 +1,6 @@
 import { useState } from 'react';
-/*
-let grid = [
-  ["B" , 1  ,  0  , 1  , 1  ],
-  [ 1  , 1  ,  0  , 1  , "B"],
-  [ 0  , 0  ,  0  , 1  , 1  ],
-  [ 1  , 1  ,  2  , 2  , 2  ],
-  [ 1  ,"B" ,  2  ,"B" ,"B" ],
-   ];
-*/
+
 let grid;
-GenerateGrid(5, 4);
-
-function GenerateGrid(gridsize, amountOfBombs) {
-  let bombLocations = [];
-  for (let bomb = 0; bomb < amountOfBombs; bomb++) {
-    let possibleBomb = Math.floor(Math.random() * (gridsize*gridsize));
-    bombLocations.push(possibleBomb);
-  }
-  grid = [];
-  for (let rowIndex = 0; rowIndex < gridsize; rowIndex++) {
-    grid.push([]);
-    
-    for (let columnIndex = 0; columnIndex < gridsize; columnIndex++) {
-      grid[rowIndex].push(12);
-    } 
-  }
-  //console.log(grid);
-}
-
-function NavigationPanel() {
-  return (
-    <>
-      <div className="navigationpanel">
-        <button className="square" onClick={() => GenerateGrid(3, 5)}>easy</button>
-        <button className="square" onClick={() => GenerateGrid(9, 5)}>normal</button>
-        <button className="square" onClick={() => GenerateGrid(15, 5)}>hard</button>
-      </div>
-    </>
-  )
-}
 
 function TitlePanel() {
   return (
@@ -99,13 +61,11 @@ function Row(cellsInRow) {
 }
 
 function Tile(value) {
-  const [val, setValue] = useState(null);
-  
+  //temporary set the usesate to value, later set to null to make it interactive again
+  const [val, setValue] = useState(value);
+
   function handleLeftClick() {
     switch(val) {
-      case null:
-        setValue(value);
-        break;
       case "flag":
         break;
       case "B":
@@ -145,7 +105,50 @@ function LeaderboardPane() {
   );
 }
 
-export default function Game() {
+function Game() {
+  const [gameState, changeGame] = useState("");
+  
+  function GenerateGrid(gridsize, amountOfBombs) {
+    //generate bomb locations
+    let bombLocations = [];
+    while (bombLocations.length < amountOfBombs) {
+      let possibleBomb = Math.floor(Math.random() * (gridsize*gridsize));
+      if (bombLocations.indexOf(possibleBomb) === -1) {
+        bombLocations.push(possibleBomb);
+      }
+    }
+    //create grid and add bombs to it
+    grid = [];
+    let gridCounter = 0;
+    for (let rowIndex = 0; rowIndex < gridsize; rowIndex++) {
+      grid.push([]);
+      
+      for (let columnIndex = 0; columnIndex < gridsize; columnIndex++) {
+        if (bombLocations.includes(gridCounter)) {
+          grid[rowIndex].push("B");
+        } else {
+          grid[rowIndex].push(0);
+        }
+        gridCounter++;
+      }
+    }
+    changeGame(gridsize);
+    //TODO: loop over array and start adding 1 to neighbouring tiles
+    //TODO: add state change to tilepane so it is being updated
+  }
+  
+  function NavigationPanel() {
+    return (
+      <>
+        <div className="navigationpanel">
+          <button className="square" onClick={() => GenerateGrid(3, 5)}>easy</button>
+          <button className="square" onClick={() => GenerateGrid(9, 5)}>normal</button>
+          <button className="square" onClick={() => GenerateGrid(15, 5)}>hard</button>
+        </div>
+      </>
+    )
+  }
+
   return (
     <>
       <TitlePanel />
@@ -157,3 +160,5 @@ export default function Game() {
     </>
   );
 }
+
+export default Game;
