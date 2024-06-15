@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+/*
 let grid = [
   ["B" , 1  ,  0  , 1  , 1  ],
   [ 1  , 1  ,  0  , 1  , "B"],
@@ -7,8 +7,16 @@ let grid = [
   [ 1  , 1  ,  2  , 2  , 2  ],
   [ 1  ,"B" ,  2  ,"B" ,"B" ],
    ];
+*/
+let grid;
+GenerateGrid(5, 4);
 
-function GenerateGrid(gridsize, bombs) {
+function GenerateGrid(gridsize, amountOfBombs) {
+  let bombLocations = [];
+  for (let bomb = 0; bomb < amountOfBombs; bomb++) {
+    let possibleBomb = Math.floor(Math.random() * (gridsize*gridsize));
+    bombLocations.push(possibleBomb);
+  }
   grid = [];
   for (let rowIndex = 0; rowIndex < gridsize; rowIndex++) {
     grid.push([]);
@@ -17,7 +25,7 @@ function GenerateGrid(gridsize, bombs) {
       grid[rowIndex].push(12);
     } 
   }
-  console.log(grid);
+  //console.log(grid);
 }
 
 function NavigationPanel() {
