@@ -8,16 +8,25 @@ let grid = [
   [ 1  ,"B" ,  2  ,"B" ,"B" ],
    ];
 */
-let grid;
+let grid = [];
 GenerateGrid(5, 4);
 
 function GenerateGrid(gridsize, amountOfBombs) {
   let bombLocations = [];
-  for (let bomb = 0; bomb < amountOfBombs; bomb++) {
+  while (bombLocations.length < amountOfBombs){
     let possibleBomb = Math.floor(Math.random() * (gridsize*gridsize));
+    console.log(possibleBomb);
     bombLocations.push(possibleBomb);
+    console.log(bombLocations.includes(possibleBomb));
+    /*
+    if (bombLocations.includes(possibleBomb) !== false) {
+      bombLocations.includes(possibleBomb);
+      bombLocations.push(possibleBomb);
+    }
+      */
   }
-  grid = [];
+  console.log(bombLocations);
+
   for (let rowIndex = 0; rowIndex < gridsize; rowIndex++) {
     grid.push([]);
     
