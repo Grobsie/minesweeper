@@ -22,6 +22,50 @@ function InfoPanel() {
   );
 }
 
+function NavigationPanel({setBoard}) {
+
+  //placeholder function to figure things out
+  function generateGrid(gridsize, amountOfBombs) {
+
+  }
+  /*
+  function generateGrid(gridsize, amountOfBombs) {
+    //generate bomb locations
+    let bombLocations = [];
+    while (bombLocations.length < amountOfBombs) {
+      let possibleBomb = Math.floor(Math.random() * (gridsize*gridsize));
+      if (bombLocations.indexOf(possibleBomb) === -1) {
+        bombLocations.push(possibleBomb);
+      }
+    }
+    //create grid and add bombs to it
+    grid = [];
+    let gridCounter = 0;
+    for (let rowIndex = 0; rowIndex < gridsize; rowIndex++) {
+      grid.push([]);
+      
+      for (let columnIndex = 0; columnIndex < gridsize; columnIndex++) {
+        if (bombLocations.includes(gridCounter)) {
+          grid[rowIndex].push("B");
+        } else {
+          grid[rowIndex].push(0);
+        }
+        gridCounter++;
+      }
+    }
+    //TODO: loop over array and start adding 1 to neighbouring tiles
+    //TODO: add state change to tilepane so it is being updated
+  }
+  */
+  return (
+    <>
+      <div className="navigationpanel">
+        <button className="square" onClick={() => setBoard("board1")}>easy</button>
+      </div>
+    </>
+  )
+}
+
 function TimerPanel() {
   return (
     <>
@@ -32,12 +76,12 @@ function TimerPanel() {
   );
 }
 
-function TilePanel() {
+function TilePanel({board}) {
   const returnArray = [];
   let tempCellsInRow = [];
-  for (let rowIndex in grid) {
-    for (let tileIndex in grid[rowIndex]) {
-      tempCellsInRow.push(Tile(grid[rowIndex][tileIndex]));
+  for (let rowIndex in board) {
+    for (let tileIndex in board[rowIndex]) {
+      tempCellsInRow.push(Tile(board[rowIndex][tileIndex]));
     }
     returnArray.push(Row(tempCellsInRow));
     tempCellsInRow = [];
@@ -60,9 +104,9 @@ function Row(cellsInRow) {
   );
 }
 
-function Tile(value) {
+function Tile(val) {
   //temporary set the usesate to value, later set to null to make it interactive again
-  const [val, setValue] = useState(value);
+  const [value, setValue] = useState(val);
 
   function handleLeftClick() {
     switch(val) {
@@ -71,7 +115,7 @@ function Tile(value) {
       case "B":
         break;
       default:
-        setValue(value);
+        setValue(val);
     }
   }
 
@@ -106,56 +150,15 @@ function LeaderboardPane() {
 }
 
 function Game() {
-  const [gameState, changeGame] = useState("");
-  
-  function GenerateGrid(gridsize, amountOfBombs) {
-    //generate bomb locations
-    let bombLocations = [];
-    while (bombLocations.length < amountOfBombs) {
-      let possibleBomb = Math.floor(Math.random() * (gridsize*gridsize));
-      if (bombLocations.indexOf(possibleBomb) === -1) {
-        bombLocations.push(possibleBomb);
-      }
-    }
-    //create grid and add bombs to it
-    grid = [];
-    let gridCounter = 0;
-    for (let rowIndex = 0; rowIndex < gridsize; rowIndex++) {
-      grid.push([]);
-      
-      for (let columnIndex = 0; columnIndex < gridsize; columnIndex++) {
-        if (bombLocations.includes(gridCounter)) {
-          grid[rowIndex].push("B");
-        } else {
-          grid[rowIndex].push(0);
-        }
-        gridCounter++;
-      }
-    }
-    changeGame(gridsize);
-    //TODO: loop over array and start adding 1 to neighbouring tiles
-    //TODO: add state change to tilepane so it is being updated
-  }
-  
-  function NavigationPanel() {
-    return (
-      <>
-        <div className="navigationpanel">
-          <button className="square" onClick={() => GenerateGrid(3, 5)}>easy</button>
-          <button className="square" onClick={() => GenerateGrid(9, 5)}>normal</button>
-          <button className="square" onClick={() => GenerateGrid(15, 5)}>hard</button>
-        </div>
-      </>
-    )
-  }
+  const [board, setBoard] = useState([[0,0,0,0,0]]);
 
   return (
     <>
       <TitlePanel />
       <InfoPanel />
-      <NavigationPanel />
+      <NavigationPanel setBoard={setBoard}/>
       <TimerPanel />
-      <TilePanel />
+      <TilePanel board={board}/>
       <LeaderboardPane />
     </>
   );
