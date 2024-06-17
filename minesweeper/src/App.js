@@ -77,39 +77,42 @@ function TimerPanel() {
 }
 
 function TilePanel({board}) {
-  const returnArray = [];
-  let tempCellsInRow = [];
-  for (let rowIndex in board) {
-    for (let tileIndex in board[rowIndex]) {
-      tempCellsInRow.push(Tile(board[rowIndex][tileIndex]));
-    }
-    returnArray.push(Row(tempCellsInRow));
-    tempCellsInRow = [];
-  };
+  function row(cellsInRow) {
+    return (
+      <>
+        <div className="row">{cellsInRow}</div>
+      </>
+    );
+  }
+  function generateOutput() {
+    const returnArray = [];
+    let tempCellsInRow = [];
+    for (let rowIndex in board) {
+      for (let tileIndex in board[rowIndex]) {
+        tempCellsInRow.push(Tile(board[rowIndex][tileIndex]));
+      }
+      returnArray.push(row(tempCellsInRow));
+      tempCellsInRow = [];
+    };
+    return returnArray;
+  }
   //console.log(returnArray);
   return (
     <>
     <div className="tilepanel">
-      {returnArray}
+      {generateOutput()}
     </div>
     </>
   );  
 }
 
-function Row(cellsInRow) {
-  return (
-    <>
-      <div className="row">{cellsInRow}</div>
-    </>
-  );
-}
 
 function Tile(val) {
   //temporary set the usesate to value, later set to null to make it interactive again
-  const [value, setValue] = useState(val);
+  const [value, setValue] = useState(null);
 
   function handleLeftClick() {
-    switch(val) {
+    switch(value) {
       case "flag":
         break;
       case "B":
@@ -121,9 +124,9 @@ function Tile(val) {
 
   function handleRightClick(e) {
     e.preventDefault(); //prevent default context menu
-    if (val === null) {
+    if (value === null) {
       setValue("flag");
-    } else if (val === "flag") {
+    } else if (value === "flag") {
       setValue(null);
     }
     
@@ -131,7 +134,7 @@ function Tile(val) {
 
   return (
     <>
-      <div className="tile" onClick={handleLeftClick} onContextMenu={handleRightClick}>{val}</div>
+      <div className="tile" onClick={handleLeftClick} onContextMenu={handleRightClick}>{value}</div>
     </>
   );
 }
