@@ -25,10 +25,7 @@ function InfoPanel() {
 function NavigationPanel({setBoard}) {
 
   //placeholder function to figure things out
-  function generateGrid(gridsize, amountOfBombs) {
 
-  }
-  /*
   function generateGrid(gridsize, amountOfBombs) {
     //generate bomb locations
     let bombLocations = [];
@@ -53,14 +50,17 @@ function NavigationPanel({setBoard}) {
         gridCounter++;
       }
     }
+    return grid;
     //TODO: loop over array and start adding 1 to neighbouring tiles
     //TODO: add state change to tilepane so it is being updated
   }
-  */
+ 
   return (
     <>
       <div className="navigationpanel">
-        <button className="square" onClick={() => setBoard("board1")}>easy</button>
+        <button className="square" onClick={() => setBoard(generateGrid(5, 12))}>easy</button>
+        <button className="square" onClick={() => setBoard(generateGrid(8, 12))}>medium</button>
+        <button className="square" onClick={() => setBoard(generateGrid(12, 12))}>hard</button>
       </div>
     </>
   )
@@ -76,41 +76,10 @@ function TimerPanel() {
   );
 }
 
-function TilePanel({board}) {
-  function row(cellsInRow) {
-    return (
-      <>
-        <div className="row">{cellsInRow}</div>
-      </>
-    );
-  }
-  function generateOutput() {
-    const returnArray = [];
-    let tempCellsInRow = [];
-    for (let rowIndex in board) {
-      for (let tileIndex in board[rowIndex]) {
-        tempCellsInRow.push(Tile(board[rowIndex][tileIndex]));
-      }
-      returnArray.push(row(tempCellsInRow));
-      tempCellsInRow = [];
-    };
-    return returnArray;
-  }
-  //console.log(returnArray);
-  return (
-    <>
-    <div className="tilepanel">
-      {generateOutput()}
-    </div>
-    </>
-  );  
-}
-
-
-function Tile(val) {
+function Tile({val}) {
   //temporary set the usesate to value, later set to null to make it interactive again
   const [value, setValue] = useState(null);
-
+  
   function handleLeftClick() {
     switch(value) {
       case "flag":
@@ -153,7 +122,7 @@ function LeaderboardPane() {
 }
 
 function Game() {
-  const [board, setBoard] = useState([[0,0,0,0,0]]);
+  const [board, setBoard] = useState([]);
 
   return (
     <>
@@ -161,7 +130,15 @@ function Game() {
       <InfoPanel />
       <NavigationPanel setBoard={setBoard}/>
       <TimerPanel />
-      <TilePanel board={board}/>
+      <div class="tilepanel">
+      {board.map((row, rowIndex) => (
+        <div key={rowIndex}>
+          {row.map((tile, tileIndex) => (
+            <Tile key={tileIndex} val={tile} />
+          ))}
+        </div>
+      ))}
+      </div>
       <LeaderboardPane />
     </>
   );
